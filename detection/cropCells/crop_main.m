@@ -1,0 +1,9 @@
+tmpDetectionStack = detectionStack(1:10);
+tmpImageStack = newImageStack(:,:,1:10);
+imageCrops = cropDetections(tmpDetectionStack,tmpImageStack,windowSize);
+corrValues = cellCorrelations(imageCrops(:,:,1),imageCrops);
+detection = detectionStack{1}(1,:);
+dists = detectionDistances(detection,tmpDetectionStack);
+[~,inds] = sort(dists,'ascend');
+sortedCorrs = corrValues(inds);
+h1 = imtool3D(newImageStack(:,:,1:10),[],[],[],[],maskStack(:,:,1:10));
