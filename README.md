@@ -7,3 +7,5 @@ The code consists of 3 parts.
 2. Tracking 
 3. Tracklet association
 
+We use Gaussian processes.
+
