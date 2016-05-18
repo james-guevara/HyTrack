@@ -7,5 +7,5 @@ The code consists of 3 parts.
 2. Tracking 
 3. Tracklet association
 
-We use the GPML toolbox.
+We use the GPML toolbox. Download from here: http://www.gaussianprocess.org/gpml/code/matlab/doc/
 
