@@ -45,6 +45,7 @@ for n=1:N
     end
 end
 % Build new tracks
+counter=-1;
 numTracks = length(trackletIndices);
 newTracklets = zeros(T,2,numTracks);
 for i=1:numTracks
@@ -52,7 +53,18 @@ for i=1:numTracks
     for j=1:length(tmpIndices)
         tmpTracklet = tracklets(:,:,tmpIndices(j));
         positionIndices = find(tmpTracklet(:,1));
+        if counter~=-1
+            [x2, y2]=tmpTracklet(positionIndices(1),:);
+            gapNum=positionIndices(1)-counter-1;
+            for kk=counter+1:positionIndices(1)-1
+                uu=kk-counter;
+                newTracklets(kk,1,i)=(x2-x1)*uu/gapNum +x1; 
+                newTracklets(kk,2,i)=(y2-y1)*uu/gapNum +y1;
+            end
+        end
         newTracklets(positionIndices,:,i) = tmpTracklet(positionIndices,:);
+        counter=positionIndices(end);
+        [x1,y1]=tmpTracklet(counter,:);
     end
 end
 
@@ -65,4 +77,3 @@ end
 
 
 end
-
