@@ -1,4 +1,4 @@
-function [cellDetections, maskStack] = detectCellStack( imageStack, ... 
+function [cellDetections, maskStackOne, maskStackTwo] = detectCellStack( imageStack, ... 
     intensityThreshold, distanceThreshold )
 %% distanceThreshold - usually 3, intensityThreshold - varies (.3)
 %%
@@ -35,28 +35,28 @@ for t=1:T
 end
 
 %% Create mask with detections (using scale of radius 2)
-% maskStack = zeros(size(imageStack));
-% for t=1:T
-%     N = size(cellDetections{t,2},1);
-%     for n=1:N % makes crosshair at each detection
-%         maskStack(cellDetections{t,2}(n,2),cellDetections{t,2}(n,1),t) = 1;
-%         maskStack(cellDetections{t,2}(n,2),cellDetections{t,2}(n,1)+1,t) = 1;
-%         maskStack(cellDetections{t,2}(n,2),cellDetections{t,2}(n,1)-1,t) = 1;
-%         maskStack(cellDetections{t,2}(n,2)+1,cellDetections{t,2}(n,1),t) = 1;
-%         maskStack(cellDetections{t,2}(n,2)-1,cellDetections{t,2}(n,1),t) = 1;
-%     end
-% end
+maskStackTwo = zeros(size(imageStack));
+for t=1:T
+    N = size(cellDetections{t,2},1);
+    for n=1:N % makes crosshair at each detection
+        maskStackTwo(cellDetections{t,2}(n,2),cellDetections{t,2}(n,1),t) = 1;
+        maskStackTwo(cellDetections{t,2}(n,2),cellDetections{t,2}(n,1)+1,t) = 1;
+        maskStackTwo(cellDetections{t,2}(n,2),cellDetections{t,2}(n,1)-1,t) = 1;
+        maskStackTwo(cellDetections{t,2}(n,2)+1,cellDetections{t,2}(n,1),t) = 1;
+        maskStackTwo(cellDetections{t,2}(n,2)-1,cellDetections{t,2}(n,1),t) = 1;
+    end
+end
 
 %% Create mask with detections (using scale of radius 1)
-maskStack = zeros(size(imageStack));
+maskStackOne = zeros(size(imageStack));
 for t=1:T
     N = size(cellDetections{t,1},1);
     for n=1:N % makes crosshair at each detection
-        maskStack(cellDetections{t,1}(n,2),cellDetections{t,1}(n,1),t) = 1;
-        maskStack(cellDetections{t,1}(n,2),cellDetections{t,1}(n,1)+1,t) = 1;
-        maskStack(cellDetections{t,1}(n,2),cellDetections{t,1}(n,1)-1,t) = 1;
-        maskStack(cellDetections{t,1}(n,2)+1,cellDetections{t,1}(n,1),t) = 1;
-        maskStack(cellDetections{t,1}(n,2)-1,cellDetections{t,1}(n,1),t) = 1;
+        maskStackOne(cellDetections{t,1}(n,2),cellDetections{t,1}(n,1),t) = 1;
+        maskStackOne(cellDetections{t,1}(n,2),cellDetections{t,1}(n,1)+1,t) = 1;
+        maskStackOne(cellDetections{t,1}(n,2),cellDetections{t,1}(n,1)-1,t) = 1;
+        maskStackOne(cellDetections{t,1}(n,2)+1,cellDetections{t,1}(n,1),t) = 1;
+        maskStackOne(cellDetections{t,1}(n,2)-1,cellDetections{t,1}(n,1),t) = 1;
     end
 end
 
