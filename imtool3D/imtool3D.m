@@ -277,7 +277,7 @@ classdef imtool3D < handle
             tool.handles.fig=fig;
             tool.handles.parent = h;
             tool.maskColor = [1 0 0];
-            tool.alpha = .7;
+            tool.alpha = .8;
             
             %Create the panels and slider
             w=30; %Pixel width of the side panels
