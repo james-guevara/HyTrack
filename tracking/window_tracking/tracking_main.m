@@ -1,12 +1,12 @@
 %%
 thresholdParams = struct;
-thresholdParams.distanceThreshold = 3;
-thresholdParams.intensityThreshold = 0;
+thresholdParams.distanceThreshold = 2.5;
+thresholdParams.intensityThreshold = .04;
 thresholdParams.angleThreshold = 50;
 windowSize = [6 6];
-windowSearchSize = 3;
+windowSearchSize = 4;
 
 [tracklets, newDetectionStack] = buildTracklets(imageStack, detectionStack, thresholdParams, ...
     windowSize, windowSearchSize);
 
-trackletMask2 = showTracklets(imageStack,tracklets);
+trackletMask = showTracklets(imageStack,tracklets);

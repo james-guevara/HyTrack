@@ -17,8 +17,11 @@ for t=1:T
     detections = newDetectionStack{t};   % x,y,amplitude (sorted by amplitude)
     N = size(detections,1);
     for n=1:N
+        n
         initialPosition = detections(n,1:2);
         amplitude = detections(n,3);
+        
+        %% Unnecessary?
         if (~isempty(trackletStack))
             numTracks = size(trackletStack,3);
             for i=1:numTracks
@@ -29,8 +32,9 @@ for t=1:T
                 end
             end
         end
+        %%
 
-        if (initialPosition ~= [0 0] & amplitude >= .13)
+        if (initialPosition ~= [0 0] & amplitude >= intensityThreshold)
             [tracklet, newDetectionStack] = trackCell(imageStack, newDetectionStack, trackletStack, windowSize, ...
                 distanceThreshold, intensityThreshold, angleThreshold, ...
                 windowSearchSize, t, initialPosition);
