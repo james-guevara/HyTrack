@@ -54,7 +54,9 @@ for i=1:numTracks
         tmpTracklet = tracklets(:,:,tmpIndices(j));
         positionIndices = find(tmpTracklet(:,1));
         if counter~=-1
-            [x2, y2]=tmpTracklet(positionIndices(1),:);
+            z2=tmpTracklet(positionIndices(1),:);
+            x2=z2(1);
+            y2=z2(2);
             gapNum=positionIndices(1)-counter-1;
             for kk=counter+1:positionIndices(1)-1
                 uu=kk-counter;
@@ -64,7 +66,9 @@ for i=1:numTracks
         end
         newTracklets(positionIndices,:,i) = tmpTracklet(positionIndices,:);
         counter=positionIndices(end);
-        [x1,y1]=tmpTracklet(counter,:);
+        z1=tmpTracklet(counter,:);
+        x1=z1(1);
+        y1=z1(2);
     end
 end
 
