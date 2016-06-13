@@ -1,5 +1,9 @@
 function [ newDetections ] = mergeDetections( detections, distanceThreshold )
 [rows,cols] = size(detections);
+newDetections = [];
+if (rows == 0)
+    return;
+end
 xyCoords = detections(:,1:2);
 amps     = detections(:,3);
 for i=1:rows
