@@ -1,6 +1,8 @@
-function [costMat, state_interpolations, assignments, associations] = makeCostMatrix( trackletData, imageStack, windowSize, gpParams, distanceThreshold, timeThreshold )
+function [costMat, state_interpolations, assignments, associations] = makeCostMatrix( tracklets, imageStack, windowSize, gpParams, distanceThreshold, timeThreshold )
+trackletVelocities = getTrackletVelocities(tracklets);
+trackletData = [tracklets trackletVelocities];
 [~,~,N] = size(trackletData);
-beta  = .9;
+beta  = .99;
 eps   = timeThreshold;
 alpha = .9;
 % Get track lengths
