@@ -1,4 +1,4 @@
-function [newTracklets, trackletIndices] = interpolateTracklets( tracklets, assignments, state_interpolations )
+function [newTracklets, trackletIndices] = interpolateTracklets( tracklets, assignments, state_interpolations, gpParams )
 [T,~,N] = size(tracklets);
 trackletIndices = {};
 newAssignments = assignments;
@@ -54,6 +54,12 @@ for i=1:numTracks
             end
         end
     end
+end
+
+% Fill in tracklets (remaining holes)
+[~,~,N] = size(newTracklets);
+for n=1:N
+    newTracklets(:,:,n) = interpolateTracklet(newTracklets(:,:,n),gpParams,newTracklets);
 end
 
 
