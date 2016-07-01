@@ -17,6 +17,35 @@ for n=1:N
         end
     end
 end
+counter1=0;
+counter2=0;
+for n=1:N
+    trkStart=find(tracklets(:,1,n)); 
+    for t=trkStart(1):trkStart(end)
+        if tracklets(t,1,n)==0 && counter2==0;
+            counter1=t;
+            counter2=-1;
+        end
+        if counter1~=0 &&tracklets(t,1,n)~=0
+            counter2=t;
+            r33=counter2-counter1;
+            r11=tracklets(counter1-1,1,n);
+            r12=tracklets(counter2,1,n);
+            r21=tracklets(counter1-1,2,n);
+            r22=tracklets(counter2,1,n);
+            for h=counter1:counter2-1
+                r44=h-counter1+1;
+                tracklets(counter1-1,1,n)=(r12-r11)*r44/r33 +r12;
+                tracklets(counter1-1,2,n)=(r22-r21)*r44/r33 +r22;
+            end
+            counter1=0;
+            counter2=0;
+        end
+        
+        
+        
+    end
+end
 
 
 end
