@@ -4,10 +4,11 @@ function [cost, states ] = calculateCost( ii, jj, imageStack, trackletData, ...
 tracklet1_data = trackletData(:,:,ii);          tracklet2_data = trackletData(:,:,jj);
 tracklet1 = tracklet1_data(:,1:2);              tracklet2 = tracklet2_data(:,1:2);
 tracklet1_pos = find(tracklet1_data(:,1));      tracklet2_pos = find(tracklet2_data(:,1));
-tracklet1_endTime = find(tracklet1_pos(end));   tracklet2_startTime = find(tracklet2_pos(1));
+tracklet1_endTime = tracklet1_pos(end);         tracklet2_startTime = tracklet2_pos(1);
 % tracklet1_len = length(tracklet1_pos);          tracklet2_len = length(tracklet2_pos);
 
 trackletDistance = pdist2(tracklet1(tracklet1_endTime,:),tracklet2(tracklet2_startTime,:));
+frameGap = tracklet2_startTime-tracklet1_endTime;
 % Thresholding
 if frameGap <= 0
     cost = -inf;
@@ -28,13 +29,16 @@ elseif trackletDistance > frameGap*maxDistancePerFrame
 else
     % Compute appearance affinity, motion affinity, and temporal affinity.
     % Compute appearance affinity.
+    if (ii == 1059)
+        1
+    end
     avgTemplate1 = averageTemplate(imageStack,tracklet1,windowSize);
     avgTemplate2 = averageTemplate(imageStack,tracklet2,windowSize);
     appearance_affinity = 90 - imagesAngle(avgTemplate1,avgTemplate2)/90;
     % Calculate motion affinity.
     stateOne = tracklet1(tracklet1_endTime,:);
     stateTwo = tracklet2(tracklet2_startTime,:);
-    [stateMean, stateCovariance, states] = propagateState(stateOne, tracklet1_end, frameGap, gpParams, trackletData);
+    [stateMean, stateCovariance, states] = propagateState(stateOne, tracklet1_endTime, frameGap, gpParams, trackletData);
     % If stateMean obtained from GP velocity is too big...
     if pdist2(stateMean,stateTwo) > frameGap*maxDistancePerFrame
         cost = -inf;

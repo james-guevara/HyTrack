@@ -1,4 +1,4 @@
-function h = testingAssignments(tracklets,associations,imageStack,state_interpolations)
+function h = testingAssignments(tracklets,associations,imageStack,stateInterpolations)
 
 A = [];
 for i=1:size(associations,1)
